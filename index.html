@@ -2,55 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secret Valentine Journey</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script defer src="js/script.js"></script>
+    <title>A Secret Message for You 💖</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div id="welcome">
-            <h1>Hi...</h1>
-            <p>Let's take a little journey together 💖</p>
-            <button onclick="startStory()">Click to Begin</button>
-        </div>
+    <!-- Phase 1: Landing Page -->
+    <div id="landing" class="page active">
+        <div class="floating-hearts">💖💖💖</div>
+        <h1>Hey Love... 👀</h1>
+        <button class="cta-button" onclick="nextPage('memory')">Click to Begin</button>
+    </div>
 
-        <div id="story" class="hidden">
-            <h2>Remember our first special moment?</h2>
-            <p>Choose the correct one:</p>
-            <ul>
-                <li onclick="wrongAnswer()">That time we argued over pizza 🍕</li>
-                <li onclick="wrongAnswer()">The day we watched a boring movie 🎥</li>
-                <li onclick="nextStep()">The magical moment we first met ✨</li>
-            </ul>
+    <!-- Phase 2: Password-Protected Memories -->
+    <div id="memory" class="page">
+        <div class="password-box">
+            <h2>What's the day we first met? (DDMMYYYY)</h2>
+            <input type="number" id="password" placeholder="Enter date...">
+            <button onclick="checkPassword()">Unlock</button>
         </div>
-
-        <div id="memory-game" class="hidden">
-            <h2>Match our memories!</h2>
-            <p>Click the cards to match the pairs</p>
-            <div class="game-board">
-                <div class="card" onclick="flipCard(this)">💖</div>
-                <div class="card" onclick="flipCard(this)">💖</div>
-                <div class="card" onclick="flipCard(this)">🎶</div>
-                <div class="card" onclick="flipCard(this)">🎶</div>
-            </div>
-            <button onclick="checkGameCompletion()">Next</button>
-        </div>
-
-        <div id="quiz" class="hidden">
-            <h2>Quick Quiz: What makes us special? ❤️</h2>
-            <ul>
-                <li onclick="wrongAnswer()">The fact that I snore 💤</li>
-                <li onclick="wrongAnswer()">Your obsession with cats 🐱</li>
-                <li onclick="correctAnswer()">Everything about us is magical ✨</li>
-            </ul>
-        </div>
-
-        <div id="final" class="hidden">
-            <h1>Would you be my Valentine? ❤️</h1>
-            <button onclick="finalAnswer('yes')">Yes! 💖</button>
-            <button onclick="finalAnswer('no')">Nope (not an option) 😆</button>
+        <div id="memory-content" class="hidden">
+            <!-- Photos/videos load here -->
         </div>
     </div>
+
+    <!-- Phase 3: Proposal -->
+    <div id="proposal" class="page">
+        <div class="heart-game">
+            <h2>Collect 5 hearts to continue! 💘</h2>
+            <div class="hearts-container"></div>
+        </div>
+        <div id="final-question" class="hidden">
+            <img src="assets/images/placeholder.jpg" alt="Our Photo" class="final-image">
+            <h1>Will you be my Valentine?</h1>
+            <button id="yes-btn" onclick="celebrate()">YES! 💕</button>
+            <button id="no-btn" onmouseover="moveButton()">Hmm... 🤔</button>
+        </div>
+    </div>
+
+    <script src="scripts/script.js"></script>
 </body>
 </html>
