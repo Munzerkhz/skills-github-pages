@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: pink;
+    text-align: center;
+    margin: 0;
+    padding: 50px;
+}
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+h1, h2 {
+    color: red;
+}
+button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+button:hover {
+    background-color: darkred;
+}
+ul {
+    list-style: none;
+    padding: 0;
+}
+li {
+    background: white;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid red;
+}
+li:hover {
+    background: lightcoral;
+}

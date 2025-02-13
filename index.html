@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise Valentine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="welcome">
+            <h1>Hi...</h1>
+            <button onclick="startStory()">Click Me</button>
+        </div>
+        <div id="story" style="display:none;">
+            <h2>Do you remember our first date?</h2>
+            <button onclick="nextStep()">Yes!</button>
+        </div>
+        <div id="quiz" style="display:none;">
+            <h2>Quick Quiz: What is my favorite thing about you?</h2>
+            <ul>
+                <li onclick="wrongAnswer()">Your smile</li>
+                <li onclick="wrongAnswer()">Your kindness</li>
+                <li onclick="correctAnswer()">Everything</li>
+            </ul>
+        </div>
+        <div id="final" style="display:none;">
+            <h1>Would you be my Valentine? ❤️</h1>
+            <button onclick="finalAnswer('yes')">Yes!</button>
+            <button onclick="finalAnswer('no')">No (you can't!)</button>
+        </div>
+    </div>
+</body>
+</html>
