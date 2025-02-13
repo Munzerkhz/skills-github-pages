@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surprise Valentine</title>
+    <title>Secret Valentine Journey</title>
     <link rel="stylesheet" href="css/style.css">
     <script defer src="js/script.js"></script>
 </head>
@@ -11,24 +11,45 @@
     <div class="container">
         <div id="welcome">
             <h1>Hi...</h1>
-            <button onclick="startStory()">Click Me</button>
+            <p>Let's take a little journey together 💖</p>
+            <button onclick="startStory()">Click to Begin</button>
         </div>
-        <div id="story" style="display:none;">
-            <h2>Do you remember our first date?</h2>
-            <button onclick="nextStep()">Yes!</button>
-        </div>
-        <div id="quiz" style="display:none;">
-            <h2>Quick Quiz: What is my favorite thing about you?</h2>
+
+        <div id="story" class="hidden">
+            <h2>Remember our first special moment?</h2>
+            <p>Choose the correct one:</p>
             <ul>
-                <li onclick="wrongAnswer()">Your smile</li>
-                <li onclick="wrongAnswer()">Your kindness</li>
-                <li onclick="correctAnswer()">Everything</li>
+                <li onclick="wrongAnswer()">That time we argued over pizza 🍕</li>
+                <li onclick="wrongAnswer()">The day we watched a boring movie 🎥</li>
+                <li onclick="nextStep()">The magical moment we first met ✨</li>
             </ul>
         </div>
-        <div id="final" style="display:none;">
+
+        <div id="memory-game" class="hidden">
+            <h2>Match our memories!</h2>
+            <p>Click the cards to match the pairs</p>
+            <div class="game-board">
+                <div class="card" onclick="flipCard(this)">💖</div>
+                <div class="card" onclick="flipCard(this)">💖</div>
+                <div class="card" onclick="flipCard(this)">🎶</div>
+                <div class="card" onclick="flipCard(this)">🎶</div>
+            </div>
+            <button onclick="checkGameCompletion()">Next</button>
+        </div>
+
+        <div id="quiz" class="hidden">
+            <h2>Quick Quiz: What makes us special? ❤️</h2>
+            <ul>
+                <li onclick="wrongAnswer()">The fact that I snore 💤</li>
+                <li onclick="wrongAnswer()">Your obsession with cats 🐱</li>
+                <li onclick="correctAnswer()">Everything about us is magical ✨</li>
+            </ul>
+        </div>
+
+        <div id="final" class="hidden">
             <h1>Would you be my Valentine? ❤️</h1>
-            <button onclick="finalAnswer('yes')">Yes!</button>
-            <button onclick="finalAnswer('no')">No (you can't!)</button>
+            <button onclick="finalAnswer('yes')">Yes! 💖</button>
+            <button onclick="finalAnswer('no')">Nope (not an option) 😆</button>
         </div>
     </div>
 </body>
