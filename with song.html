@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Will You Be My Valentine?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    /* Base Reset & Fonts */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; }
+    
+    /* COLLAGE BACKGROUND */
+    #collageBg {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      display: grid; grid-template-columns: repeat(5, 1fr); grid-auto-rows: minmax(200px, auto);
+      gap: 5px; z-index: -1; padding: 10px; transform: rotate(-2deg);
+    }
+    #collageBg img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 8px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+    }
+    #collageBg img:nth-child(odd) { transform: rotate(3deg); z-index: 1; }
+    #collageBg img:nth-child(even) { transform: rotate(-3deg); z-index: 2; }
+    
+    /* Stage & Card Styles */
+    .stage {
+      display: none; justify-content: center; align-items: center;
+      width: 100vw; height: 100vh; position: relative; z-index: 4;
+      overflow-y: auto; padding: 20px;
+    }
+    .active { display: flex; }
+    .content-card {
+      background-color: rgba(255,255,255,0.95); border-radius: 12px;
+      padding: 30px; max-width: 600px; width: 90%; margin: 0 auto;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1); text-align: center;
+    }
+    h1, h2 { color: #ff5e81; margin-bottom: 15px; }
+    p { color: #333; line-height: 1.6; margin-bottom: 15px; }
+    .btn {
+      display: inline-block; margin-top: 20px; padding: 12px 24px; font-size: 1rem;
+      border: none; border-radius: 50px; background-color: #ff5e81; color: #fff;
+      cursor: pointer; transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    .btn:hover { transform: scale(1.05); background-color: #ff3060; }
+    .quiz-options { text-align: left; margin: 20px 0; }
+    .quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; }
+    .heart-icon {
+      width: 50px;
+      height: 50px;
+      background-image: url('https://i.imgur.com/4HJbzEq.png');
+      background-size: cover;
+      background-position: center top;
+      position: absolute;
+      cursor: pointer;
+    }
+    .small-input {
+      padding: 10px; width: 80%; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;
+    }
+    /* Container for Next and Back buttons */
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- COLLAGE BACKGROUND -->
+  <div id="collageBg">
+    <img src="https://i.postimg.cc/W4rG0Tn4/IMG-4172.jpg">
+    <img src="https://i.postimg.cc/fTrmFJqL/IMG-5915.jpg">
+    <img src="https://i.postimg.cc/q7kJxGcC/IMG-1515.jpg">
+    <img src="https://i.postimg.cc/h4H7bHXz/IMG-1511.jpg">
+    <img src="https://i.postimg.cc/tR1x6X4G/IMG-1595.jpg">
+    <img src="https://i.postimg.cc/RZ8rNQsB/IMG-4127.jpg">
+    <img src="https://i.postimg.cc/pTf3cN2W/IMG-4123.jpg">
+    <img src="https://i.postimg.cc/Dzb9sJHb/IMG-4104.jpg">
+    <img src="https://i.postimg.cc/SsFwGQb1/IMG-4079.jpg">
+    <img src="https://i.postimg.cc/yxfQ2s2H/IMG-2047.jpg">
+    <img src="https://i.postimg.cc/HW3hr9nh/IMG-2050.jpg">
+    <img src="https://i.postimg.cc/Kjcp9Rqf/IMG-3815.jpg">
+    <img src="https://i.postimg.cc/W1dCLq2f/IMG-3973.jpg">
+    <img src="https://i.postimg.cc/ZRSMdf61/IMG-4030.jpg">
+    <img src="https://i.postimg.cc/BvDztWPT/IMG-4035.jpg">
+    <img src="https://i.postimg.cc/pXG46JtF/IMG-4049.jpg">
+    <img src="https://i.postimg.cc/DZPYdqgm/IMG-5691.jpg">
+    <img src="https://i.postimg.cc/nhN5HVrV/IMG-5918.jpg">
+  </div>
+
+  <!-- Hidden Audio Element for Background Music (using screenapp link) -->
+  <audio id="backgroundAudio" loop preload="auto" style="display: none;">
+    <source src="https://screenapp.io/app/#/shared/fZ7v3fndM3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- STAGES -->
+  <!-- Stage 0: Welcome (No Back button) -->
+  <div id="stage0" class="stage active">
+    <div class="content-card">
+      <h2>Welcome my beautiful Jneena</h2>
+      <button class="btn" id="btnStage0">Next</button>
+    </div>
+  </div>
+
+  <!-- Stage 1: Introductory Statement (No "Question" label) -->
+  <div id="stage1" class="stage">
+    <div class="content-card">
+      <h2>Do you know how much I miss you?</h2>
+      <p>Select the most “insanely huge” way to describe it:</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="missYouQuiz" value="wrong"> More than there are stars in the sky</label>
+        <label><input type="radio" name="missYouQuiz" value="correct"> To infinity (and beyond)!</label>
+        <label><input type="radio" name="missYouQuiz" value="wrong"> More than I can possibly put into words</label>
+      </div>
+      <p id="missYouFeedback"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage1">Back</button>
+        <button class="btn" id="btnStage1" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 2: Introductory Statement -->
+  <div id="stage2" class="stage">
+    <div class="content-card">
+      <h2>Don’t worry, this is not why I’m here.</h2>
+      <div class="btn-container">
+        <button class="btn" id="backStage2">Back</button>
+        <button class="btn" id="btnStage2">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 3: Introductory Statement -->
+  <div id="stage3" class="stage">
+    <div class="content-card">
+      <h2>I’m here to express how much I love you and how much you mean to me.</h2>
+      <div class="btn-container">
+        <button class="btn" id="backStage3">Back</button>
+        <button class="btn" id="btnStage3">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 4: Introductory Statement -->
+  <div id="stage4" class="stage">
+    <div class="content-card">
+      <h2>But before that, I need to determine if you are worthy of this love.</h2>
+      <div class="btn-container">
+        <button class="btn" id="backStage4">Back</button>
+        <button class="btn" id="btnStage4">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 5: First Question (Sugar Daddy) -->
+  <div id="stage5" class="stage">
+    <div class="content-card">
+      <h2>Why did Ola call Munzer "Sugar Daddy" here?</h2>
+      <p><img src="https://i.postimg.cc/x1HCjC5t/IMG-7362.png" width="200" alt="Sugar Daddy Screenshot"></p>
+      <div class="quiz-options">
+        <label><input type="radio" name="sugarDaddy" value="wrong"> Because he’s rich</label>
+        <label><input type="radio" name="sugarDaddy" value="wrong"> Because he landed his first job</label>
+        <label><input type="radio" name="sugarDaddy" value="correct"> Because he got his first salary</label>
+      </div>
+      <p id="sugarDaddyFeedback"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage5">Back</button>
+        <button class="btn" id="btnStage5" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 6: Question 2 -->
+  <div id="stage6" class="stage">
+    <div class="content-card">
+      <h2>What's Munzer's famous saying? I'm an ...... I take risk</h2>
+      <div class="quiz-options">
+        <label><input type="radio" name="q6" value="1"> Trader</label>
+        <label><input type="radio" name="q6" value="2"> Fighter</label>
+        <label><input type="radio" name="q6" value="3"> Entrepreneur</label>
+      </div>
+      <p id="q6Feedback"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage6">Back</button>
+        <button class="btn" id="btnStage6" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 7: Question 3 -->
+  <div id="stage7" class="stage">
+    <div class="content-card">
+      <h2>Time is an illusionary concept, .......... are........</h2>
+      <div class="quiz-options">
+        <label><input type="radio" name="q7" value="1"> Quanta are discrete</label>
+        <label><input type="radio" name="q7" value="2"> Waffles are waffles</label>
+        <label><input type="radio" name="q7" value="3"> Pancakes are pancakes</label>
+      </div>
+      <p id="q7Feedback"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage7">Back</button>
+        <button class="btn" id="btnStage7" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 8: Question 4 -->
+  <div id="stage8" class="stage">
+    <div class="content-card">
+      <h2>What's the color of our love</h2>
+      <div class="quiz-options">
+        <label><input type="radio" name="q8" value="red"> Red</label>
+        <label><input type="radio" name="q8" value="yellow"> Yellow</label>
+        <label><input type="radio" name="q8" value="white"> White</label>
+      </div>
+      <p id="q8Feedback"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage8">Back</button>
+        <button class="btn" id="btnStage8" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 9: Question 5 -->
+  <div id="stage9" class="stage">
+    <div class="content-card">
+      <h2>When was the date of our first kiss</h2>
+      <div class="quiz-options">
+        <label><input type="radio" name="q9" value="18/6/2022"> 18/6/2022</label>
+        <label><input type="radio" name="q9" value="20/11/2022"> 20/11/2022</label>
+        <label><input type="radio" name="q9" value="19/6/2022"> 19/6/2022</label>
+      </div>
+      <p id="q9Feedback"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage9">Back</button>
+        <button class="btn" id="btnStage9" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 10: Transitional Message -->
+  <div id="stage10" class="stage">
+    <div class="content-card">
+      <h2>Now that you made it here it means that you are worth but firstly…</h2>
+      <div class="btn-container">
+        <button class="btn" id="backStage10">Back</button>
+        <button class="btn" id="btnStage10">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 11: Catch the Hearts -->
+  <div id="stage11" class="stage">
+    <div class="content-card">
+      <h2>Catch the Hearts</h2>
+      <p>Click on at least 3 hearts to continue.</p>
+      <div id="heartsArea" style="position: relative; height: 200px; background: #ffe6ed; border-radius: 8px; margin: 20px 0;"></div>
+      <div class="btn-container">
+        <button class="btn" id="backStage11">Back</button>
+        <button class="btn" id="btnStage11" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 12: Your Words -->
+  <div id="stage12" class="stage">
+    <div class="content-card">
+      <h2>Your Words</h2>
+      <p>Write a message for us:</p>
+      <input type="text" id="userMessage" class="small-input" placeholder="Type your message here">
+      <br>
+      <button class="btn" id="submitMessageBtn">Submit Message</button>
+      <p id="messageDisplay"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage12">Back</button>
+        <button class="btn" id="btnStage12" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 13: Almost There... -->
+  <div id="stage13" class="stage">
+    <div class="content-card">
+      <h2>Almost There...</h2>
+      <p>Everything leads to this special moment.</p>
+      <div class="btn-container">
+        <button class="btn" id="backStage13">Back</button>
+        <button class="btn" id="btnStage13">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 14: Will You Be My Valentine? -->
+  <div id="stage14" class="stage">
+    <div class="content-card">
+      <h2>Will You Be My Valentine?</h2>
+      <p>It all comes down to this. Please say yes!</p>
+      <div class="btn-container">
+        <button class="btn" id="backStage14">Back</button>
+        <button class="btn" id="yesButton">Yes!</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function goToStage(current, next) {
+      document.getElementById(current).classList.remove('active');
+      document.getElementById(next).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Stage 0
+      document.getElementById('btnStage0').addEventListener('click', () => {
+        goToStage('stage0', 'stage1');
+      });
+      
+      // Stage 1
+      document.querySelectorAll('input[name="missYouQuiz"]').forEach(opt => {
+        opt.addEventListener('change', function() {
+          if (this.value === 'correct') {
+            document.getElementById('missYouFeedback').textContent = "Yes, that’s how insanely huge it is! I miss you to infinity!";
+            document.getElementById('btnStage1').disabled = false;
+          } else {
+            document.getElementById('missYouFeedback').textContent = "Nope, try again!";
+          }
+        });
+      });
+      document.getElementById('btnStage1').addEventListener('click', () => {
+        goToStage('stage1', 'stage2');
+      });
+      document.getElementById('backStage1').addEventListener('click', () => {
+        goToStage('stage1', 'stage0');
+      });
+      
+      // Stage 2
+      document.getElementById('btnStage2').addEventListener('click', () => {
+        goToStage('stage2', 'stage3');
+      });
+      document.getElementById('backStage2').addEventListener('click', () => {
+        goToStage('stage2', 'stage1');
+      });
+      
+      // Stage 3
+      document.getElementById('btnStage3').addEventListener('click', () => {
+        goToStage('stage3', 'stage4');
+      });
+      document.getElementById('backStage3').addEventListener('click', () => {
+        goToStage('stage3', 'stage2');
+      });
+      
+      // Stage 4
+      document.getElementById('btnStage4').addEventListener('click', () => {
+        goToStage('stage4', 'stage5');
+      });
+      document.getElementById('backStage4').addEventListener('click', () => {
+        goToStage('stage4', 'stage3');
+      });
+      
+      // Stage 5
+      document.querySelectorAll('input[name="sugarDaddy"]').forEach(opt => {
+        opt.addEventListener('change', function() {
+          if (this.value === 'correct') {
+            document.getElementById('sugarDaddyFeedback').textContent = "Correct! Don’t worry, it will get harder.";
+            document.getElementById('btnStage5').disabled = false;
+          } else {
+            document.getElementById('sugarDaddyFeedback').textContent = "Nope, guess again!";
+          }
+        });
+      });
+      document.getElementById('btnStage5').addEventListener('click', () => {
+        goToStage('stage5', 'stage6');
+      });
+      document.getElementById('backStage5').addEventListener('click', () => {
+        goToStage('stage5', 'stage4');
+      });
+      
+      // Stage 6
+      document.querySelectorAll('input[name="q6"]').forEach(opt => {
+        opt.addEventListener('change', function() {
+          const feedback = document.getElementById('q6Feedback');
+          if (this.value === "3") {
+            feedback.textContent = "ALL DAY";
+            document.getElementById('btnStage6').disabled = false;
+          } else if (this.value === "2") {
+            feedback.textContent = "really ???";
+            document.getElementById('btnStage6').disabled = false;
+          } else if (this.value === "1") {
+            feedback.textContent = "close enough";
+            document.getElementById('btnStage6').disabled = false;
+          }
+        });
+      });
+      document.getElementById('btnStage6').addEventListener('click', () => {
+        goToStage('stage6', 'stage7');
+      });
+      document.getElementById('backStage6').addEventListener('click', () => {
+        goToStage('stage6', 'stage5');
+      });
+      
+      // Stage 7
+      document.querySelectorAll('input[name="q7"]').forEach(opt => {
+        opt.addEventListener('change', function() {
+          const feedback = document.getElementById('q7Feedback');
+          if (this.value === "2") { // Correct: Waffles are waffles
+            feedback.textContent = "Correct!";
+            document.getElementById('btnStage7').disabled = false;
+          } else {
+            feedback.textContent = "Try again!";
+          }
+        });
+      });
+      document.getElementById('btnStage7').addEventListener('click', () => {
+        goToStage('stage7', 'stage8');
+      });
+      document.getElementById('backStage7').addEventListener('click', () => {
+        goToStage('stage7', 'stage6');
+      });
+      
+      // Stage 8
+      document.querySelectorAll('input[name="q8"]').forEach(opt => {
+        opt.addEventListener('change', function() {
+          const feedback = document.getElementById('q8Feedback');
+          if (this.value === "white") {
+            feedback.textContent = "Correct!";
+            document.getElementById('btnStage8').disabled = false;
+          } else {
+            feedback.textContent = "Hmm, try again!";
+          }
+        });
+      });
+      document.getElementById('btnStage8').addEventListener('click', () => {
+        goToStage('stage8', 'stage9');
+      });
+      document.getElementById('backStage8').addEventListener('click', () => {
+        goToStage('stage8', 'stage7');
+      });
+      
+      // Stage 9
+      document.querySelectorAll('input[name="q9"]').forEach(opt => {
+        opt.addEventListener('change', function() {
+          const feedback = document.getElementById('q9Feedback');
+          if (this.value === "19/6/2022") {
+            feedback.textContent = "I don't even know hahahahaha I made it up";
+            document.getElementById('btnStage9').disabled = false;
+          } else {
+            feedback.textContent = "Try again!";
+          }
+        });
+      });
+      document.getElementById('btnStage9').addEventListener('click', () => {
+        goToStage('stage9', 'stage10');
+      });
+      document.getElementById('backStage9').addEventListener('click', () => {
+        goToStage('stage9', 'stage8');
+      });
+      
+      // Stage 10
+      document.getElementById('btnStage10').addEventListener('click', () => {
+        goToStage('stage10', 'stage11');
+      });
+      document.getElementById('backStage10').addEventListener('click', () => {
+        goToStage('stage10', 'stage9');
+      });
+      
+      // Stage 11
+      const heartsArea = document.getElementById('heartsArea');
+      let heartsClicked = 0;
+      const newHeartImg = "https://i.postimg.cc/bwwrbPjR/IMG-7709.png?usp=drivesdk";
+      for (let i = 0; i < 5; i++){
+        const heart = document.createElement('div');
+        heart.classList.add('heart-icon');
+        heart.style.backgroundImage = `url(${newHeartImg})`;
+        heart.style.left = Math.random() * 80 + "%";
+        heart.style.top = Math.random() * 150 + "px";
+        heart.addEventListener('click', function() {
+          if (!heart.classList.contains('clicked')){
+            heartsClicked++;
+            heart.classList.add('clicked');
+            heart.style.opacity = "0.5";
+            if (heartsClicked >= 3) {
+              document.getElementById('btnStage11').disabled = false;
+            }
+          }
+        });
+        heartsArea.appendChild(heart);
+      }
+      document.getElementById('btnStage11').addEventListener('click', () => {
+        goToStage('stage11', 'stage12');
+      });
+      document.getElementById('backStage11').addEventListener('click', () => {
+        goToStage('stage11', 'stage10');
+      });
+      
+      // Stage 12
+      document.getElementById('submitMessageBtn').addEventListener('click', function() {
+        const msg = document.getElementById('userMessage').value.trim();
+        if (msg) {
+          document.getElementById('messageDisplay').textContent = "You wrote: " + msg;
+          document.getElementById('btnStage12').disabled = false;
+        }
+      });
+      document.getElementById('btnStage12').addEventListener('click', () => {
+        goToStage('stage12', 'stage13');
+      });
+      document.getElementById('backStage12').addEventListener('click', () => {
+        goToStage('stage12', 'stage11');
+      });
+      
+      // Stage 13
+      document.getElementById('btnStage13').addEventListener('click', () => {
+        goToStage('stage13', 'stage14');
+      });
+      document.getElementById('backStage13').addEventListener('click', () => {
+        goToStage('stage13', 'stage12');
+      });
+      
+      // Stage 14
+      document.getElementById('backStage14').addEventListener('click', () => {
+        goToStage('stage14', 'stage13');
+      });
+      document.getElementById('yesButton').addEventListener('click', () => {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+        const audio = document.getElementById('backgroundAudio');
+        audio.play().then(() => {
+          console.log('Background audio is playing.');
+        }).catch((error) => {
+          console.error('Error playing background audio:', error);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
