@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Will You Be My Valentine?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <!-- COLLAGE BACKGROUND -->
+  <div id="collageBg">
+    <img src="https://i.postimg.cc/W4rG0Tn4/IMG-4172.jpg">
+    <img src="https://i.postimg.cc/fTrmFJqL/IMG-5915.jpg">
+    <img src="https://i.postimg.cc/q7kJxGcC/IMG-1515.jpg">
+    <img src="https://i.postimg.cc/h4H7bHXz/IMG-1511.jpg">
+    <img src="https://i.postimg.cc/tR1x6X4G/IMG-1595.jpg">
+    <img src="https://i.postimg.cc/RZ8rNQsB/IMG-4127.jpg">
+    <img src="https://i.postimg.cc/pTf3cN2W/IMG-4123.jpg">
+    <img src="https://i.postimg.cc/Dzb9sJHb/IMG-4104.jpg">
+    <img src="https://i.postimg.cc/SsFwGQb1/IMG-4079.jpg">
+    <img src="https://i.postimg.cc/yxfQ2s2H/IMG-2047.jpg">
+    <img src="https://i.postimg.cc/HW3hr9nh/IMG-2050.jpg">
+    <img src="https://i.postimg.cc/Kjcp9Rqf/IMG-3815.jpg">
+    <img src="https://i.postimg.cc/W1dCLq2f/IMG-3973.jpg">
+    <img src="https://i.postimg.cc/ZRSMdf61/IMG-4030.jpg">
+    <img src="https://i.postimg.cc/BvDztWPT/IMG-4035.jpg">
+    <img src="https://i.postimg.cc/pXG46JtF/IMG-4049.jpg">
+    <img src="https://i.postimg.cc/DZPYdqgm/IMG-5691.jpg">
+    <img src="https://i.postimg.cc/nhN5HVrV/IMG-5918.jpg">
+  </div>
+
+  <!-- Hidden Audio Element for Background Music -->
+  <audio id="backgroundAudio" loop preload="auto" style="display: none;">
+    <source src="https://screenapp.io/app/#/shared/fZ7v3fndM3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- STAGES -->
+  <!-- Stage 0: Welcome -->
+  <div id="stage0" class="stage active">
+    <div class="content-card">
+      <h2>Welcome my beautiful Jneena</h2>
+      <button class="btn" id="btnStage0">Next</button>
+    </div>
+  </div>
+  
+  <!-- Stage 1: Introductory Statement -->
+  <div id="stage1" class="stage">
+    <div class="content-card">
+      <h2>Do you know how much I miss you?</h2>
+      <p>Select the most “insanely huge” way to describe it:</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="missYouQuiz" value="wrong"> More than there are stars in the sky</label>
+        <label><input type="radio" name="missYouQuiz" value="correct"> To infinity (and beyond)!</label>
+        <label><input type="radio" name="missYouQuiz" value="wrong"> More than I can possibly put into words</label>
+      </div>
+      <p id="missYouFeedback"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage1">Back</button>
+        <button class="btn" id="btnStage1" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 2 -->
+  <div id="stage2" class="stage">
+    <div class="content-card">
+      <h2>Don’t worry, this is not why I’m here.</h2>
+      <div class="btn-container">
+        <button class="btn" id="backStage2">Back</button>
+        <button class="btn" id="btnStage2">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 3 -->
+  <div id="stage3" class="stage">
+    <div class="content-card">
+      <h2>I’m here to express how much I love you and how much you mean to me.</h2>
+      <div class="btn-container">
+        <button class="btn" id="backStage3">Back</button>
+        <button class="btn" id="btnStage3">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 4 -->
+  <div id="stage4" class="stage">
+    <div class="content-card">
+      <h2>But before that, I need to determine if you are worthy of this love.</h2>
+      <div class="btn-container">
+        <button class="btn" id="backStage4">Back</button>
+        <button class="btn" id="btnStage4">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 5: Sugar Daddy Question -->
+  <div id="stage5" class="stage">
+    <div class="content-card">
+      <h2>Why did Ola call Munzer "Sugar Daddy" here?</h2>
+      <p><img src="https://i.postimg.cc/x1HCjC5t/IMG-7362.png" width="200" alt="Sugar Daddy Screenshot"></p>
+      <div class="quiz-options">
+        <label><input type="radio" name="sugarDaddy" value="wrong"> Because he’s rich</label>
+        <label><input type="radio" name="sugarDaddy" value="wrong"> Because he landed his first job</label>
+        <label><input type="radio" name="sugarDaddy" value="correct"> Because he got his first salary</label>
+      </div>
+      <p id="sugarDaddyFeedback"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage5">Back</button>
+        <button class="btn" id="btnStage5" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 6: Famous Saying -->
+  <div id="stage6" class="stage">
+    <div class="content-card">
+      <h2>What's Munzer's famous saying? I'm an ...... I take risk</h2>
+      <div class="quiz-options">
+        <label><input type="radio" name="q6" value="1"> Trader</label>
+        <label><input type="radio" name="q6" value="2"> Fighter</label>
+        <label><input type="radio" name="q6" value="3"> Entrepreneur</label>
+      </div>
+      <p id="q6Feedback"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage6">Back</button>
+        <button class="btn" id="btnStage6" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 7: Time Concept -->
+  <div id="stage7" class="stage">
+    <div class="content-card">
+      <h2>Time is an illusionary concept, .......... are........</h2>
+      <div class="quiz-options">
+        <label><input type="radio" name="q7" value="1"> Quanta are discrete</label>
+        <label><input type="radio" name="q7" value="2"> Waffles are waffles</label>
+        <label><input type="radio" name="q7" value="3"> Pancakes are pancakes</label>
+      </div>
+      <p id="q7Feedback"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage7">Back</button>
+        <button class="btn" id="btnStage7" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 8: Color of Our Love -->
+  <div id="stage8" class="stage">
+    <div class="content-card">
+      <h2>What's the color of our love</h2>
+      <div class="quiz-options">
+        <label><input type="radio" name="q8" value="red"> Red</label>
+        <label><input type="radio" name="q8" value="yellow"> Yellow</label>
+        <label><input type="radio" name="q8" value="white"> White</label>
+      </div>
+      <p id="q8Feedback"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage8">Back</button>
+        <button class="btn" id="btnStage8" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 9: First Kiss Date -->
+  <div id="stage9" class="stage">
+    <div class="content-card">
+      <h2>When was the date of our first kiss</h2>
+      <div class="quiz-options">
+        <label><input type="radio" name="q9" value="18/6/2022"> 18/6/2022</label>
+        <label><input type="radio" name="q9" value="20/11/2022"> 20/11/2022</label>
+        <label><input type="radio" name="q9" value="19/6/2022"> 19/6/2022</label>
+      </div>
+      <p id="q9Feedback"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage9">Back</button>
+        <button class="btn" id="btnStage9" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 10: Transitional Message -->
+  <div id="stage10" class="stage">
+    <div class="content-card">
+      <h2>Now that you made it here it means that you are worth but firstly…</h2>
+      <div class="btn-container">
+        <button class="btn" id="backStage10">Back</button>
+        <button class="btn" id="btnStage10">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 11: Catch the Hearts -->
+  <div id="stage11" class="stage">
+    <div class="content-card">
+      <h2>Catch the Hearts</h2>
+      <p>Click on at least 3 hearts to continue.</p>
+      <div id="heartsArea" style="position: relative; height: 200px; background: #ffe6ed; border-radius: 8px; margin: 20px 0;"></div>
+      <div class="btn-container">
+        <button class="btn" id="backStage11">Back</button>
+        <button class="btn" id="btnStage11" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 12: Your Words -->
+  <div id="stage12" class="stage">
+    <div class="content-card">
+      <h2>Your Words</h2>
+      <p>Write a message for us:</p>
+      <input type="text" id="userMessage" class="small-input" placeholder="Type your message here">
+      <br>
+      <button class="btn" id="submitMessageBtn">Submit Message</button>
+      <p id="messageDisplay"></p>
+      <div class="btn-container">
+        <button class="btn" id="backStage12">Back</button>
+        <button class="btn" id="btnStage12" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 13: Almost There... -->
+  <div id="stage13" class="stage">
+    <div class="content-card">
+      <h2>Almost There...</h2>
+      <p>Everything leads to this special moment.</p>
+      <div class="btn-container">
+        <button class="btn" id="backStage13">Back</button>
+        <button class="btn" id="btnStage13">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 14: Will You Be My Valentine? -->
+  <div id="stage14" class="stage">
+    <div class="content-card">
+      <h2>Will You Be My Valentine?</h2>
+      <p>It all comes down to this. Please say yes!</p>
+      <div class="btn-container">
+        <button class="btn" id="backStage14">Back</button>
+        <button class="btn" id="yesButton">Yes!</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- STAGES 15 to 30: The Love Letter -->
+  <!-- Stage 15 -->
+  <div id="stage15" class="stage">
+    <div class="content-card letter">
+      <p>
+        My beautiful sunshine<br><br>
+        You are the most precious person in my life. You are the reason why I wake up every morning with a smile on my face. You are the source of my happiness and joy.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage15">Back</button>
+        <button class="btn" id="btnStage15">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 16 -->
+  <div id="stage16" class="stage">
+    <div class="content-card letter">
+      <p>(A quiet moment to let these words sink in...)</p>
+      <div class="btn-container">
+        <button class="btn" id="backStage16">Back</button>
+        <button class="btn" id="btnStage16">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 17 -->
+  <div id="stage17" class="stage">
+    <div class="content-card letter">
+      <p>
+        You are the light of my world and the warmth of my heart. I want you to know how much I appreciate you and everything you do for me. You are always there to support me, encourage me, comfort me, and inspire me.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage17">Back</button>
+        <button class="btn" id="btnStage17">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 18 -->
+  <div id="stage18" class="stage">
+    <div class="content-card letter">
+      <p>
+        You are always understanding, patient, kind, and generous. You are always loyal, faithful, honest, and respectful. You are everything I ever dreamed of and more.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage18">Back</button>
+        <button class="btn" id="btnStage18">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 19 -->
+  <div id="stage19" class="stage">
+    <div class="content-card letter">
+      <p>
+        You have no idea how much you mean to me.<br>
+        You have no idea how much you affect me.<br>
+        You have no idea how much you make me feel.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage19">Back</button>
+        <button class="btn" id="btnStage19">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 20 -->
+  <div id="stage20" class="stage">
+    <div class="content-card letter">
+      <p>
+        You make me feel alive, you make me feel loved, you make me feel special, you make me feel beautiful. You are the best thing that ever happened to me. You are the best gift I ever received. You are the best partner I ever had. You are the best girl I ever made. You are the best lover I ever found.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage20">Back</button>
+        <button class="btn" id="btnStage20">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 21 -->
+  <div id="stage21" class="stage">
+    <div class="content-card letter">
+      <p>
+        You are my soulmate, my other half, my perfect match. You are my companion, my confidant, my ally. You are my partner in crime, my partner in life, my partner in love. You are my everything, my all, my only. I can't imagine my life without you. I can't imagine a day without seeing your face, hearing your voice, feeling your touch, smelling your scent, or tasting your kiss.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage21">Back</button>
+        <button class="btn" id="btnStage21">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 22 -->
+  <div id="stage22" class="stage">
+    <div class="content-card letter">
+      <p>
+        I can't imagine a moment without thinking of you, dreaming of you, longing for you, missing you, loving you. You are the only one who can make me laugh when I'm sad, make me calm when I'm angry, make me brave when I'm scared, make me strong when I'm weak, make me better when I'm broken.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage22">Back</button>
+        <button class="btn" id="btnStage22">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 23 -->
+  <div id="stage23" class="stage">
+    <div class="content-card letter">
+      <p>
+        You are the only one who can fill the emptiness in my heart, heal the wounds in my soul, soothe the pain in my body, ease the stress in my mind, lift the burden in my spirit.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage23">Back</button>
+        <button class="btn" id="btnStage23">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 24 -->
+  <div id="stage24" class="stage">
+    <div class="content-card letter">
+      <p>
+        You are the only one who can satisfy my desires, fulfill my needs, meet my expectations, match my standards, and exceed my dreams. You are the only one who can understand me, accept me, respect me, trust me, love me.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage24">Back</button>
+        <button class="btn" id="btnStage24">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 25 -->
+  <div id="stage25" class="stage">
+    <div class="content-card letter">
+      <p>
+        You are the only one who can make me happy, and I want to make you happy too. I want to be there for you, as you are there for me. I want to support you, as you support me. I want to encourage you, as you encourage me.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage25">Back</button>
+        <button class="btn" id="btnStage25">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 26 -->
+  <div id="stage26" class="stage">
+    <div class="content-card letter">
+      <p>
+        I want to comfort you, as you comfort me. I want to inspire you, as you inspire me. I want your shoulder to lean on, your ear to listen, your hand to hold, your chest to cuddle, your lips to kiss.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage26">Back</button>
+        <button class="btn" id="btnStage26">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 27 -->
+  <div id="stage27" class="stage">
+    <div class="content-card letter">
+      <p>
+        I want to be your rock, your anchor, your shield, your sword, your protector. I want to be your partner, your lover, your everything. I want to be yours, and I want you to be mine.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage27">Back</button>
+        <button class="btn" id="btnStage27">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 28 -->
+  <div id="stage28" class="stage">
+    <div class="content-card letter">
+      <p>
+        I want to share my life with you, and I want you to share your life with me. I want to grow old with you, and I want you to grow old with me. I want to love you, and I want you to love me.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage28">Back</button>
+        <button class="btn" id="btnStage28">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 29 -->
+  <div id="stage29" class="stage">
+    <div class="content-card letter">
+      <p>
+        You’re the one I want to spend my life with. You’re my forever love.
+      </p>
+      <div class="btn-container">
+        <button class="btn" id="backStage29">Back</button>
+        <button class="btn" id="btnStage29">Next</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stage 30: Final Stage -->
+  <div id="stage30" class="stage">
+    <div class="content-card letter">
+      <h2>Happy Valentine's Day, my love, my home, my safe place</h2>
+      <div class="btn-container">
+        <button class="btn" id="backStage30">Back</button>
+        <button class="btn" id="finishButton">Finish</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
